@@ -1,0 +1,24 @@
+AllCops:
+  Includes:
+    - Rakefile
+    - Vagrantfile
+  Excludes:
+    - test/fixtures/**
+
+Encoding:
+  Enabled: false
+
+HashSyntax:
+  Enabled: false
+
+TrailingWhitespace:
+  Enabled: false
+
+TrailingBlankLines:
+  Enabled: false
+
+BlockNesting:
+  Max: 6
+
+LineLength:
+  Max: 120
