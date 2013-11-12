@@ -10,3 +10,5 @@ chef_gem "chef-attribute-validator" do
 end
 
 resources('chef_gem[chef-attribute-validator]').run_action(:install)
+
+require 'chef-attribute-validator'
