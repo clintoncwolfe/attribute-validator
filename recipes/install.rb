@@ -5,4 +5,8 @@
 # Copyright (C) 2013 Clinton Wolfe
 # 
 
-# TODO
+chef_gem "chef-attribute-validator" do
+  action :nothing
+end
+
+resources('chef_gem[chef-attribute-validator]').run_action(:install)
