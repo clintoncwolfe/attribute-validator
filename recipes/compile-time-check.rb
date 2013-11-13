@@ -12,6 +12,16 @@ violas = Chef::Attribute::Validator.new(node).validate_all
 unless violas.empty?
   message  = "The node attributes for this chef run failed validation!\n"
   message += "A total of #{violas.size} violation(s) were encountered.\n"
-  message += violas.map { |v| v.rule_name + ' at ' + v.path + ': ' + v.message }.join("\n")
-  fail message
+  Chef::Log.warn(message)
+  violas.each do |violation|
+    snippet = violation.rule_name + ' at ' + violation.path + ': ' + violation.message
+    message += snippet + "\n"
+    if node['attribute-validator']['fail-action'] == 'warn'
+      Chef::Log.warn 'Violation: ' + snippet
+    end
+  end
+
+  if node['attribute-validator']['fail-action'] == 'error'
+    fail message
+  end
 end

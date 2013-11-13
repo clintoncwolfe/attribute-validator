@@ -38,7 +38,6 @@ Most people will wnat this one, which will check for invalid attributes and abor
 
 * It is possible to converge a resource at compile-time; this is common for setting up package repos, installing gems, etc.  Those resources may still fire, depending on where the compile-time-check recipe is in the runlist.
 
-
 Alternatively, if you want the run to converge up until reaching your cookbook, and then abort if anything is invalid, you can use:
 
    include_recipe "attribute-validator::converge-time-check"
@@ -58,6 +57,9 @@ For details on the contents of violations, as well as other method calls allowin
 
 # Attributes
 
+
+Rule definitions occur under default['attribute-validator']['rules'][...] like this:
+
      default['attribute-validator']['rules'][some-rule] = {
         'path' => '/my-cookbook/feature_*/enabled',
         # Checks like type, regex, looks_like, min_children, present, etc 
@@ -65,8 +67,13 @@ For details on the contents of violations, as well as other method calls allowin
      }
 
      default['attribute-validator']['rules'][another-rule] = { ... }
-     
 
+The cookbook also exposes a few settings of its own:
+
+      default['attribute-validator']['fail-action'] = 'error'
+
+The default is 'error', which will raise an exception if any violations are found, halting the chef run.  You may also provide 'warn', which will issue a warning to the chef log for each violation found, but allow the run t continue.
+     
 # Recipes
 
 ## No default.
@@ -97,10 +104,13 @@ None known.
 
 ## Roadmap
 
-### More options for handling violations
+### Add support for reading rules from metadata.rb attribute DSL entries
 
-How do you want to handle violations?  Should they always be fatal?  Should we offer a chef_handler that does <what> with them?
+Because nothing enforces that now.
 
+### Handler support?
+
+Add support for sending violations via a handler, to ... somewhere?
 
 # Author
 
