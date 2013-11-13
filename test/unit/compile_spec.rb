@@ -1,6 +1,6 @@
 #require_relative './spec_helper.rb'
 
-describe 'compilephase should work' do
+describe 'compile-phase checking should work' do
   context 'when running a clean compile run' do
     output = `CAV_VAGRANTFILE_FIXTURE=compile-clean.Vagrantfile vagrant provision 2>&1 `
     status = $?
