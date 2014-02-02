@@ -9,6 +9,7 @@ Vagrant.configure('2') do |config|
   config.berkshelf.enable = true
 
   config.vm.provision :chef_solo do |chef|
+    chef.log_level = (ENV['CHEF_LOG_LEVEL'] ? ENV['CHEF_LOG_LEVEL'].to_sym : :info)
     chef.run_list = [
         'recipe[attribute-validator::install]'
     ]
