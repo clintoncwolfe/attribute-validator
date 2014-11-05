@@ -1,6 +1,6 @@
 # attribute-validator cookbook
 
-A Chef cookbook that applies validation rules to the node attributes during a chef run.  The cookbook itself is rather small; most of the guts are in a gem named 'chec-attribute-validator'.
+A Chef cookbook that applies validation rules to the node attributes during a chef run.  The cookbook itself is rather small; most of the guts are in a gem named 'chef-attribute-validator'.
 
 # Why would I possibly want that?
 
@@ -10,7 +10,7 @@ I also wanted the cookbook that cares about the validation to be able to define 
 
 # Requirements
 
-Requires the chef-attribute-validator gem installed to the Chef client's gem store.  The cookbook will install it automatically if it is not present.
+Requires the chef-attribute-validator gem installed to the Chef client's gem store.  This cookbook will install it automatically if it is not present.
 
 # Usage
 
@@ -32,7 +32,7 @@ Here is how to make sure that your feature flags really are booleans, and not 0,
 
 To enforce the rules, include one of the two recipes in your runlist, or directly in your runlist.
 
-Most people will wnat this one, which will check for invalid attributes and abort the run before any* resources are actually converged:
+Most people will want this one, which will check for invalid attributes and abort the run before any* resources are actually converged:
 
    include_recipe "attribute-validator::compile-time-check"
 
@@ -78,15 +78,15 @@ The default is 'error', which will raise an exception if any violations are foun
 
 ## No default.
 
-This cookbook has no default cookbook.
+This cookbook has no default recipe.
 
 ## attribute-validator::compile-time-check
 
-Calls the install cookbook, then calls validate_all at compile time; if nonzero violations are found, throws an exception, which halts the run.
+Calls the install recipe, then calls validate_all at compile time; if nonzero violations are found, throws an exception, which halts the run.
 
 ## attribute-validator::converge-time-check
 
-Calls the install cookbook, then calls validate_all at convergence time (inside a ruby block); if nonzero violations are found, throws an exception, which halts the run.
+Calls the install recipe, then calls validate_all at convergence time (inside a ruby block); if nonzero violations are found, throws an exception, which halts the run.
 
 ## attribute-validator::install
 
