@@ -1,0 +1,110 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-7.1
+
+suites:
+  - name: default
+    run_list:
+      - recipe[attribute-validator::install]
+
+  # Expected to fail converge - TODO: integrate better with test kitchen
+  - name: compile-broken-default
+    run_list:
+      - recipe[attribute-validator::compile-time-check]
+    attributes:
+      attribute-validator:
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+
+  # Expected to fail converge - TODO: integrate better with test kitchen
+  - name: compile-broken-error
+    run_list:
+      - recipe[attribute-validator::compile-time-check]
+    attributes:
+      attribute-validator:
+        fail-action: error
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+            
+  # Expected to pass converge but emit warning in converge log - TODO: integrate better with test kitchen
+  - name: compile-broken-warn
+    run_list:
+      - recipe[attribute-validator::compile-time-check]
+    attributes:
+      attribute-validator:
+        fail-action: warn
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+
+  - name: compile-clean
+    run_list:
+      - recipe[attribute-validator::compile-time-check]
+    attributes:
+      foo: bar
+      attribute-validator:
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+      
+  # Expected to fail converge - TODO: integrate better with test kitchen
+  - name: converge-broken-default
+    run_list:
+      - recipe[attribute-validator::converge-time-check]
+    attributes:
+      attribute-validator:
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+
+  # Expected to fail converge - TODO: integrate better with test kitchen
+  - name: converge-broken-error
+    run_list:
+      - recipe[attribute-validator::converge-time-check]
+    attributes:
+      attribute-validator:
+        fail-action: error
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+            
+  # Expected to pass converge but emit warning in converge log - TODO: integrate better with test kitchen
+  - name: converge-broken-warn
+    run_list:
+      - recipe[attribute-validator::converge-time-check]
+    attributes:
+      attribute-validator:
+        fail-action: warn
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+
+  - name: converge-clean
+    run_list:
+      - recipe[attribute-validator::converge-time-check]
+    attributes:
+      foo: bar
+      attribute-validator:
+        rules:
+          demfoos:
+            path: /foo
+            required: true
+
+        
