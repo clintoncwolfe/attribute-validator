@@ -14,10 +14,6 @@ suites:
   - name: default
     run_list:
       - recipe[attribute-validator::install]
-    attributes:
-      attribute-validator:
-        local-install: 0.9.0
-
 
   # Expected to fail converge - TODO: integrate better with test kitchen
   - name: compile-broken-default
